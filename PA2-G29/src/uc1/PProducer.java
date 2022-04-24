@@ -7,13 +7,20 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Properties;
 
+/**
+ * An implementation of Kafka consumer ensemble<br>
+ * TODO: DESCRIBE THIS PARTICULAR VERSION'S DETAILS HERE
+ */
 public class PProducer {
     public static void main(String[] args) {
         ServerSocket serverSocket;
         int port = 8000;
         String topic = "Sensor";
         Properties props = new Properties();
-        //TODO: SET PROPERTIES HERE
+        props.put("bootstrap.servers","localhost:9092");
+        props.put("key.serializer","org.apache.common.serialization.StringSerializer");
+        props.put("value.serializer","org.apache.common.serialization.StringSerializer");
+        //TODO: SET EXTRA PROPERTIES HERE
         try {
             serverSocket = new ServerSocket(port);
             while (true) {

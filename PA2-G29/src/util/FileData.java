@@ -1,5 +1,8 @@
 package util;
 
+/**
+ * Simple read-only data container object to ease storage in PSource implementations
+ */
 public class FileData {
     private final long timestamp;
     private final String sID;

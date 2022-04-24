@@ -10,6 +10,12 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Properties;
 
+/**
+ * Implementation of a Kafka Producer<br>
+ * Branches off of a server socket<br>
+ * Reads data in (SENSOR TEMP ID) format until it receives an "END" message<br>
+ * Deploys its own UI on constructor
+ */
 public class CustomKafkaProducer extends Thread{
 
     //TODO: CREATE A UI FOR PRODUCERS
@@ -19,6 +25,12 @@ public class CustomKafkaProducer extends Thread{
     private final Producer<String,Double> producer;
     private final Integer partition;
 
+    /**
+     * Instances a new producer thread
+     * @param comms the socket that sensor information is coming in from
+     * @param topic the topic to publish information into
+     * @param properties kafka producer settings
+     */
     public CustomKafkaProducer(Socket comms, String topic, Properties properties){
         this.comms = comms;
         this.topicName = topic;

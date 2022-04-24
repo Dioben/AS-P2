@@ -2,14 +2,15 @@ package uc1;
 
 import util.FileData;
 import util.ProducerSender;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A sensor file reader implementation
+ * Deploys a single sender that sends the file's entire contents to a single producer
+ */
 public class PSource {
     public static void main(String[] args) throws InterruptedException {
 
