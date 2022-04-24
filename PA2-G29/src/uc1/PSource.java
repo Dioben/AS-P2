@@ -1,6 +1,7 @@
 package uc1;
 
 import util.FileData;
+import util.ProducerSender;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PSource {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         List<FileData> data = new ArrayList<>();
         InputStream file;
@@ -29,8 +30,9 @@ public class PSource {
             data.add(new FileData(ts,id,temp));
         }
 
-
-        System.out.println("Got "+ data.size() +" records");
+        ProducerSender sender = new ProducerSender(data,0,data.size(),"localhost",8000);
+        sender.run();
+        sender.join();
 
     }
 
