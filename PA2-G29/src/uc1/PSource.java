@@ -24,7 +24,7 @@ public class PSource {
 
             String id = scanner.nextLine();
             double temp = Double.parseDouble(scanner.nextLine()); //nextDouble doesn't like the input somehow
-            int ts = scanner.nextInt();
+            long ts = scanner.nextLong();
             scanner.nextLine();//ff empty line
 
             data.add(new FileData(ts,id,temp));

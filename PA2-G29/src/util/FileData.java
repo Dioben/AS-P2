@@ -1,17 +1,17 @@
 package util;
 
 public class FileData {
-    private final int timestamp;
+    private final long timestamp;
     private final String sID;
     private final double temp;
 
-    public FileData(int ts, String id, double temp){
+    public FileData(long ts, String id, double temp){
         timestamp = ts;
         sID = id;
         this.temp = temp;
     }
 
-    public int getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 

@@ -31,6 +31,7 @@ public class ProducerSender extends Thread{
                     sent = data.get(i);
                     out.println(sent.getsID() + " " + sent.getTemp() + " " +sent.getTimestamp());
                 }
+                out.println("END");
             } catch (IOException e) {
                 e.printStackTrace();
             }
