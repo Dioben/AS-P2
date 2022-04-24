@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
  * Provides a check method to verify whether records match the given condition<br>
  * Method only allows one record at a time so further information must be preserved via internal state
  */
+@FunctionalInterface
 public interface ConsumerDataCondition {
     /**
      * Provide a new record and see whether constraints are still met
