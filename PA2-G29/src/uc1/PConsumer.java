@@ -18,7 +18,7 @@ public class PConsumer {
         Properties props = new Properties();
         props.put("bootstrap.servers","localhost:9092");
         props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");
         //TODO: MISSING PROPERTIES
 

@@ -47,7 +47,6 @@ public class CustomKafkaConsumer extends Thread{
         consumer.subscribe(Arrays.asList(topicName));
         while(true){
            data = consumer.poll(Duration.ofMillis(100));//using long as param is deprecated
-
             for (ConsumerRecord datapoint:data){ //for each record received
                 //TODO: UPDATE UI WITH DATA
                 conditionsIterator = conditions.listIterator();
