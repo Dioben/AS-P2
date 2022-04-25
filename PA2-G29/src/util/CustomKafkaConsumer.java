@@ -21,8 +21,7 @@ import java.util.concurrent.locks.Condition;
  */
 public class CustomKafkaConsumer extends Thread{
 
-    //TODO: CREATE A UI FOR PRODUCERS
-    //private final ConsumerUI ui;
+    private final GUI gui;
     private final String topicName;
     private final Consumer<String,Double> consumer;
     private final List<ConsumerDataCondition<String,Double>> conditions;
@@ -32,10 +31,10 @@ public class CustomKafkaConsumer extends Thread{
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
      */
-    public CustomKafkaConsumer(String topic, Properties properties, List<ConsumerDataCondition<String,Double>> conds){
+    public CustomKafkaConsumer(String topic, Properties properties, List<ConsumerDataCondition<String,Double>> conds, GUI gui){
         this.topicName = topic;
+        this.gui = gui;
         consumer = new KafkaConsumer(properties);
-        //TODO: Add Received UI here
         conditions = conds;
     }
 
@@ -48,7 +47,7 @@ public class CustomKafkaConsumer extends Thread{
         while(true){
            data = consumer.poll(Duration.ofMillis(100));//using long as param is deprecated
             for (ConsumerRecord datapoint:data){ //for each record received
-                //TODO: UPDATE UI WITH DATA
+                gui.addRecord((String) datapoint.key(), (double) datapoint.value(), datapoint.timestamp());
                 conditionsIterator = conditions.listIterator();
                 while (conditionsIterator.hasNext()){ //check all necessary conditions
                     condition = conditionsIterator.next();

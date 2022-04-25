@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="util.GUI">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="666d6" class="javax.swing.JLabel" binding="totalRecordCountLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Total records received : 0"/>
+        </properties>
+      </component>
+      <vspacer id="9b653">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+      <scrollpane id="21122" binding="recordListPanel">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <horizontalScrollBarPolicy value="30"/>
+          <verticalScrollBarPolicy value="22"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="8b495" class="javax.swing.JTable" binding="recordListTable">
+            <constraints/>
+            <properties>
+              <autoResizeMode value="4"/>
+              <enabled value="false"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="9d0aa" binding="recordCountByIDPanel">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <verticalScrollBarPolicy value="22"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="cbb7d" class="javax.swing.JTable" binding="recordCountByIDTable">
+            <constraints/>
+            <properties>
+              <autoResizeMode value="4"/>
+              <enabled value="false"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <hspacer id="f8a7e">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="b1e28">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="88166">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+      <component id="863e6" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Records received:"/>
+        </properties>
+      </component>
+      <component id="698ac" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Record count by sensor ID:"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

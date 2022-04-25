@@ -18,8 +18,7 @@ import java.util.Properties;
  */
 public class CustomKafkaProducer extends Thread{
 
-    //TODO: CREATE A UI FOR PRODUCERS
-    //private final ProducerUI ui;
+    private final GUI gui;
     private final Socket comms;
     private final String topicName;
     private final Producer<String,Double> producer;
@@ -32,12 +31,12 @@ public class CustomKafkaProducer extends Thread{
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
      */
-    public CustomKafkaProducer(Socket comms, String topic, Properties properties){
+    public CustomKafkaProducer(Socket comms, String topic, Properties properties, GUI gui){
         this.comms = comms;
         this.topicName = topic;
         producer = new KafkaProducer(properties);
         partition = 0;
-        //TODO: INSTANCE THE UI HERE
+        this.gui = gui;
     }
 
     /**
@@ -47,12 +46,12 @@ public class CustomKafkaProducer extends Thread{
      * @param properties kafka producer settings
      * @param partition partition to post data into
      */
-    public CustomKafkaProducer(Socket comms, String topic, Properties properties, int partition){
+    public CustomKafkaProducer(Socket comms, String topic, Properties properties, GUI gui, int partition){
         this.comms = comms;
         this.topicName = topic;
         producer = new KafkaProducer(properties);
         this.partition = partition;
-        //TODO: INSTANCE THE UI HERE
+        this.gui = gui;
     }
 
     @Override
@@ -71,7 +70,7 @@ public class CustomKafkaProducer extends Thread{
                 String sensId = msgSplit[0];
                 double temp = Double.parseDouble(msgSplit[1]);
                 long timestamp = Long.parseLong(msgSplit[2]);
-                //TODO: UPDATE UI HERE
+                gui.addRecord(sensId, temp, timestamp);
                 record = new ProducerRecord(topicName,partition,timestamp,sensId,temp);
                 producer.send(record);
             }

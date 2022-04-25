@@ -2,6 +2,7 @@ package uc1;
 
 import util.ConsumerDataCondition;
 import util.CustomKafkaConsumer;
+import util.GUI;
 import util.OrderedDataCondition;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Properties;
  */
 public class PConsumer {
     public static void main(String[] args) throws InterruptedException {
+        GUI.setGUILook(new String[] { "GTK+", "Nimbus" });
         String topic = "Sensor";
         Properties props = new Properties();
         props.put("bootstrap.servers","localhost:9092");
@@ -25,7 +27,7 @@ public class PConsumer {
         List<ConsumerDataCondition<String,Double>> conditions = new ArrayList<>();
         conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));
 
-        CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions);
+        CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,new GUI("Consumer 1"));
         receiver.run();
         receiver.join();
     }
