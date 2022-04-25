@@ -74,6 +74,7 @@ public class GUI {
         ArrayList<RowSorter.SortKey> recordCountByIDSortKeys = new ArrayList<>();
         recordCountByIDSortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         recordCountByIDTableSorter.setSortKeys(recordCountByIDSortKeys);
+        recordCountByIDTableSorter.setSortsOnUpdates(true);
     }
 
     public void addRecord(String sensorId, double temp, long timestamp) {
