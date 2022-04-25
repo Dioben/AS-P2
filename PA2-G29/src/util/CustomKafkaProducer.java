@@ -26,7 +26,8 @@ public class CustomKafkaProducer extends Thread{
     private final Integer partition;
 
     /**
-     * Instances a new producer thread
+     * Instances a new producer thread<br>
+     * This producer will post to partition 0
      * @param comms the socket that sensor information is coming in from
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
@@ -36,6 +37,21 @@ public class CustomKafkaProducer extends Thread{
         this.topicName = topic;
         producer = new KafkaProducer(properties);
         partition = 0;
+        //TODO: INSTANCE THE UI HERE
+    }
+
+    /**
+     * Instances a new producer thread
+     * @param comms the socket that sensor information is coming in from
+     * @param topic the topic to publish information into
+     * @param properties kafka producer settings
+     * @param partition partition to post data into
+     */
+    public CustomKafkaProducer(Socket comms, String topic, Properties properties, int partition){
+        this.comms = comms;
+        this.topicName = topic;
+        producer = new KafkaProducer(properties);
+        this.partition = partition;
         //TODO: INSTANCE THE UI HERE
     }
 
