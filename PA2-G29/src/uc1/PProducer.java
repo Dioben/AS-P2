@@ -18,8 +18,8 @@ public class PProducer {
         String topic = "Sensor";
         Properties props = new Properties();
         props.put("bootstrap.servers","localhost:9092");
-        props.put("key.serializer","org.apache.common.serialization.StringSerializer");
-        props.put("value.serializer","org.apache.common.serialization.StringSerializer");
+        props.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
         //TODO: SET EXTRA PROPERTIES HERE
         try {
             serverSocket = new ServerSocket(port);

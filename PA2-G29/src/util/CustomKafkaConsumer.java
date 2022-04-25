@@ -10,10 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.Duration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.locks.Condition;
 
 /**
@@ -47,6 +44,7 @@ public class CustomKafkaConsumer extends Thread{
         ConsumerRecords<String,Double> data;
         ListIterator<ConsumerDataCondition<String,Double>> conditionsIterator;
         ConsumerDataCondition<String,Double> condition;
+        consumer.subscribe(Arrays.asList(topicName));
         while(true){
            data = consumer.poll(Duration.ofMillis(100));//using long as param is deprecated
 

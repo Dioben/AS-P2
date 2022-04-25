@@ -3,7 +3,6 @@ package uc1;
 import util.ConsumerDataCondition;
 import util.CustomKafkaConsumer;
 import util.OrderedDataCondition;
-import util.ProducerSender;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,9 @@ public class PConsumer {
         String topic = "Sensor";
         Properties props = new Properties();
         props.put("bootstrap.servers","localhost:9092");
-        props.put("key.deserializer","org.apache.common.serialization.StringSerializer");
-        props.put("value.deserializer","org.apache.common.serialization.StringSerializer");
+        props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("group.id","0");
         //TODO: MISSING PROPERTIES
 
         List<ConsumerDataCondition<String,Double>> conditions = new ArrayList<>();
