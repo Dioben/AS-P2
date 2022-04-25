@@ -27,9 +27,9 @@ public class GUI {
         frame.pack();
         frame.setVisible(true);
 
-        recordListPanel.setMinimumSize(new Dimension(290, 240));
-        recordListPanel.setMaximumSize(new Dimension(290, 240));
-        recordListPanel.setPreferredSize(new Dimension(290, 240));
+        recordListPanel.setMinimumSize(new Dimension(300, 240));
+        recordListPanel.setMaximumSize(new Dimension(300, 240));
+        recordListPanel.setPreferredSize(new Dimension(300, 240));
         recordListTableModel = new DefaultTableModel(new String[] {"Sensor ID", "Temp. (Cº)", "Timestamp"}, 0) {
             @Override
             public Class getColumnClass(int column) {
@@ -52,9 +52,9 @@ public class GUI {
         recordListSortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
         recordListTableSorter.setSortKeys(recordListSortKeys);
 
-        recordCountByIDPanel.setMinimumSize(new Dimension(200, 240));
-        recordCountByIDPanel.setMaximumSize(new Dimension(200, 240));
-        recordCountByIDPanel.setPreferredSize(new Dimension(200, 240));
+        recordCountByIDPanel.setMinimumSize(new Dimension(190, 240));
+        recordCountByIDPanel.setMaximumSize(new Dimension(190, 240));
+        recordCountByIDPanel.setPreferredSize(new Dimension(190, 240));
         recordCountByIDTableModel = new DefaultTableModel(new String[] {"Sensor ID", "Count"}, 0) {
             @Override
             public Class getColumnClass(int column) {

@@ -48,7 +48,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <verticalScrollBarPolicy value="22"/>
+          <verticalScrollBarPolicy value="20"/>
         </properties>
         <border type="none"/>
         <children>
@@ -94,7 +94,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Record count by sensor ID:"/>
+          <text value="Record count per sensor:"/>
         </properties>
       </component>
     </children>
