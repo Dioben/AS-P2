@@ -35,11 +35,10 @@ public class GUI {
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 0:
-                        return String.class;
-                    case 1:
-                        return Double.class;
                     case 2:
                         return Integer.class;
+                    case 1:
+                        return Double.class;
                     default:
                         return String.class;
                 }
@@ -60,7 +59,6 @@ public class GUI {
             public Class getColumnClass(int column) {
                 switch (column) {
                     case 0:
-                        return String.class;
                     case 1:
                         return Integer.class;
                     default:
@@ -77,7 +75,7 @@ public class GUI {
         recordCountByIDTableSorter.setSortsOnUpdates(true);
     }
 
-    public void addRecord(String sensorId, double temp, long timestamp) {
+    public void addRecord(int sensorId, double temp, long timestamp) {
         totalRecordCountLabel.setText("Total records received: " + (++totalRecordCount));
         boolean newID = true;
         for (int i = 0; i < recordCountByIDTableModel.getRowCount(); i++) {

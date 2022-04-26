@@ -21,7 +21,7 @@ public class CustomKafkaProducer extends Thread{
     private final GUI gui;
     private final Socket comms;
     private final String topicName;
-    private final Producer<String,Double> producer;
+    private final Producer<Integer,Double> producer;
     private final Integer partition;
 
     /**
@@ -61,13 +61,13 @@ public class CustomKafkaProducer extends Thread{
             BufferedReader in = new BufferedReader(new InputStreamReader(comms.getInputStream()));
             String line;
             String[] msgSplit;
-            ProducerRecord<String,Double> record;
+            ProducerRecord<Integer,Double> record;
             while(true){
                 line = in.readLine();
                 if (line.equals("END"))
                         break;
                 msgSplit = line.split(" ");
-                String sensId = msgSplit[0];
+                int sensId = Integer.parseInt(msgSplit[0]);
                 double temp = Double.parseDouble(msgSplit[1]);
                 long timestamp = Long.parseLong(msgSplit[2]);
                 gui.addRecord(sensId, temp, timestamp);

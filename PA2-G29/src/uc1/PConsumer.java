@@ -11,7 +11,7 @@ import java.util.Properties;
 
 /**
  * An implementation of Kafka consumer ensemble<br>
- * TODO: DESCRIBE THIS PARTICULAR VERSION'S DETAILS HERE
+ * Deploys a single consumer thread with "default" properties
  */
 public class PConsumer {
     public static void main(String[] args) throws InterruptedException {
@@ -19,16 +19,16 @@ public class PConsumer {
         String topic = "Sensor";
         Properties props = new Properties();
         props.put("bootstrap.servers","localhost:9092");
-        props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("key.deserializer","org.apache.kafka.common.serialization.IntegerDeserializer");
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");
         //TODO: MISSING PROPERTIES
 
-        List<ConsumerDataCondition<String,Double>> conditions = new ArrayList<>();
+        List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
         conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));
 
         CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,new GUI("Consumer 1"));
-        receiver.run();
+        receiver.start();
         receiver.join();
     }
 }

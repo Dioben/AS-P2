@@ -5,10 +5,10 @@ package util;
  */
 public class FileData {
     private final long timestamp;
-    private final String sID;
+    private final int sID;
     private final double temp;
 
-    public FileData(long ts, String id, double temp){
+    public FileData(long ts, int id, double temp){
         timestamp = ts;
         sID = id;
         this.temp = temp;
@@ -18,7 +18,7 @@ public class FileData {
         return timestamp;
     }
 
-    public String getsID() {
+    public int getsID() {
         return sID;
     }
 

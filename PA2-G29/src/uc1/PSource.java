@@ -23,9 +23,9 @@ public class PSource {
 
         while (scanner.hasNextLine()){
 
-            String id = scanner.nextLine();
+            int id = Integer.parseInt(scanner.nextLine());
             double temp = Double.parseDouble(scanner.nextLine()); //nextDouble doesn't like the input somehow
-            long ts = scanner.nextLong();
+            long ts = scanner.nextLong(); //nextLong is fine though
             scanner.nextLine();//ff empty line
 
             data.add(new FileData(ts,id,temp));

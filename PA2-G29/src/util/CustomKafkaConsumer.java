@@ -23,15 +23,15 @@ public class CustomKafkaConsumer extends Thread{
 
     private final GUI gui;
     private final String topicName;
-    private final Consumer<String,Double> consumer;
-    private final List<ConsumerDataCondition<String,Double>> conditions;
+    private final Consumer<Integer,Double> consumer;
+    private final List<ConsumerDataCondition<Integer,Double>> conditions;
 
     /**
      * Instances a new producer thread
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
      */
-    public CustomKafkaConsumer(String topic, Properties properties, List<ConsumerDataCondition<String,Double>> conds, GUI gui){
+    public CustomKafkaConsumer(String topic, Properties properties, List<ConsumerDataCondition<Integer,Double>> conds, GUI gui){
         this.topicName = topic;
         this.gui = gui;
         consumer = new KafkaConsumer(properties);
@@ -40,14 +40,14 @@ public class CustomKafkaConsumer extends Thread{
 
     @Override
     public void run() {
-        ConsumerRecords<String,Double> data;
-        ListIterator<ConsumerDataCondition<String,Double>> conditionsIterator;
-        ConsumerDataCondition<String,Double> condition;
+        ConsumerRecords<Integer,Double> data;
+        ListIterator<ConsumerDataCondition<Integer,Double>> conditionsIterator;
+        ConsumerDataCondition<Integer,Double> condition;
         consumer.subscribe(Arrays.asList(topicName));
         while(true){
            data = consumer.poll(Duration.ofMillis(100));//using long as param is deprecated
             for (ConsumerRecord datapoint:data){ //for each record received
-                gui.addRecord((String) datapoint.key(), (double) datapoint.value(), datapoint.timestamp());
+                gui.addRecord((int) datapoint.key(), (double) datapoint.value(), datapoint.timestamp());
                 conditionsIterator = conditions.listIterator();
                 while (conditionsIterator.hasNext()){ //check all necessary conditions
                     condition = conditionsIterator.next();

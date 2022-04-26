@@ -10,7 +10,7 @@ import java.util.Properties;
 
 /**
  * An implementation of Kafka consumer ensemble<br>
- * TODO: DESCRIBE THIS PARTICULAR VERSION'S DETAILS HERE
+ * Deploys a single producer instance with "default" settings
  */
 public class PProducer {
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class PProducer {
         String topic = "Sensor";
         Properties props = new Properties();
         props.put("bootstrap.servers","localhost:9092");
-        props.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
+        props.put("key.serializer","org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer","org.apache.kafka.common.serialization.DoubleSerializer");
         //TODO: SET EXTRA PROPERTIES HERE
         try {
