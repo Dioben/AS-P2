@@ -31,7 +31,9 @@ public class PProducer {
             serverSocket = new ServerSocket(port);
             int i = 1;
             while (true) {
-                new CustomKafkaProducer(serverSocket.accept(),topic,props,i++).start();
+                GUI gui = new GUI("Producer " + i++);
+                new CustomKafkaProducer(serverSocket.accept(),topic,props,gui).start();
+                gui.start();
             }
         } catch (IOException e) {
             e.printStackTrace();

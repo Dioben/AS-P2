@@ -14,6 +14,7 @@ public class GUI extends Thread {
     private final DefaultTableModel recordListTableModel;
     private final DefaultTableModel recordCountByIDTableModel;
 
+    private JFrame frame;
     private JPanel mainPanel;
     private JLabel totalRecordCountLabel;
     private JScrollPane recordListPanel;
@@ -24,13 +25,12 @@ public class GUI extends Thread {
     public GUI(String title) {
         updates = new LinkedBlockingQueue<>();
 
-        JFrame frame = new JFrame(title);
+        frame = new JFrame(title);
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(516, 326));
         frame.setPreferredSize(new Dimension(516, 326));
         frame.pack();
-        frame.setVisible(true);
 
         recordListPanel.setMinimumSize(new Dimension(300, 240));
         recordListPanel.setMaximumSize(new Dimension(300, 240));
@@ -70,6 +70,7 @@ public class GUI extends Thread {
     }
 
     public void run() {
+        frame.setVisible(true);
         Object[] update;
         try {
             while (true) {

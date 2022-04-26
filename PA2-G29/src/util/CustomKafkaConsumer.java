@@ -31,10 +31,9 @@ public class CustomKafkaConsumer extends Thread{
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
      */
-    public CustomKafkaConsumer(String topic, Properties properties, List<ConsumerDataCondition<Integer,Double>> conds, int id){
+    public CustomKafkaConsumer(String topic, Properties properties, List<ConsumerDataCondition<Integer,Double>> conds, GUI gui){
         this.topicName = topic;
-        gui = new GUI("Consumer " + id);
-        gui.start();
+        this.gui = gui;
         consumer = new KafkaConsumer(properties);
         conditions = conds;
     }

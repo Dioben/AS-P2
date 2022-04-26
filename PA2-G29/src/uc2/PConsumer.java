@@ -22,8 +22,6 @@ public class PConsumer {
         props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RoundRobinAssignor"); //1 partition per consumer hopefully
         //TODO: MISSING PROPERTIES
 
-
-
         CustomKafkaConsumer[] receivers = new CustomKafkaConsumer[6];
 
         for(int i=0;i<6;i++){
@@ -31,7 +29,9 @@ public class PConsumer {
             List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
             conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));
             conditions.add(new OrderedDataCondition((previous,current)-> (current.key().equals(previous.key())?0:-1 ),"Unique Sensor ID"));
-            receivers[i] = new CustomKafkaConsumer(topic,props,conditions,i+1);
+            GUI gui = new GUI("Consumer " + (i+1));
+            receivers[i] = new CustomKafkaConsumer(topic,props,conditions,gui);
+            gui.start();
         }
         for(int i=0;i<6;i++)
             receivers[i].start();

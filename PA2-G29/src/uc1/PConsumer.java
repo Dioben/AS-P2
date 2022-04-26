@@ -28,7 +28,9 @@ public class PConsumer {
         List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
         conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));
 
-        CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,1);
+        GUI gui = new GUI("Consumer 1");
+        CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,gui);
+        gui.start();
         receiver.start();
         receiver.join();
     }
