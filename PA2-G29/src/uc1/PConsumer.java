@@ -22,6 +22,7 @@ public class PConsumer {
         props.put("key.deserializer","org.apache.kafka.common.serialization.IntegerDeserializer");
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");
+        props.put("partition.assignment.strategy","[RangeAssignor, CooperativeStickyAssignor]"); //default
         //TODO: MISSING PROPERTIES
 
         List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
