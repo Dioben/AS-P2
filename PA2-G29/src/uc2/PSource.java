@@ -6,8 +6,8 @@ import java.util.List;
 import static util.SensorParser.readFile;
 
 /**
- * A sensor file reader implementation
- * Deploys a single sender that sends the file's entire contents to a single producer<br>
+ * A sensor file reader implementation<br>
+ * Deploys 6 senders that send 6 content chunks to 6 producers<br>
  * Sorts data by ID first
  */
 public class PSource {
@@ -23,9 +23,16 @@ public class PSource {
         });
 
 
-        ProducerSender sender = new ProducerSender(data,0,data.size(),"localhost",8000);
-        sender.run();
-        sender.join();
+        ProducerSender[] senders = new ProducerSender[6];
+
+        for(int i=0;i<6;i++){
+            senders[i] = new ProducerSender(data,i/6*data.size(),(i+1)/6*data.size(),"localhost",8000);
+            senders[i].start();
+        }
+
+        for(int i=0;i<6;i++)
+            senders[i].join();
+
 
     }
 
