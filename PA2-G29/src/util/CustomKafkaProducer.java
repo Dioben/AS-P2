@@ -31,12 +31,13 @@ public class CustomKafkaProducer extends Thread{
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
      */
-    public CustomKafkaProducer(Socket comms, String topic, Properties properties, GUI gui){
+    public CustomKafkaProducer(Socket comms, String topic, Properties properties, int id){
         this.comms = comms;
         this.topicName = topic;
         producer = new KafkaProducer(properties);
         partition = 0;
-        this.gui = gui;
+        gui = new GUI("Producer " + id);
+        gui.start();
     }
 
     /**
@@ -46,12 +47,13 @@ public class CustomKafkaProducer extends Thread{
      * @param properties kafka producer settings
      * @param partition partition to post data into
      */
-    public CustomKafkaProducer(Socket comms, String topic, Properties properties, GUI gui, int partition){
+    public CustomKafkaProducer(Socket comms, String topic, Properties properties, int id, int partition){
         this.comms = comms;
         this.topicName = topic;
         producer = new KafkaProducer(properties);
         this.partition = partition;
-        this.gui = gui;
+        gui = new GUI("Producer " + id);
+        gui.start();
     }
 
     @Override

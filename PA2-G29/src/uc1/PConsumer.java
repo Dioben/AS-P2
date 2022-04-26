@@ -22,13 +22,13 @@ public class PConsumer {
         props.put("key.deserializer","org.apache.kafka.common.serialization.IntegerDeserializer");
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");
-        props.put("partition.assignment.strategy","[RangeAssignor, CooperativeStickyAssignor]"); //default
+        props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RangeAssignor, org.apache.kafka.clients.consumer.CooperativeStickyAssignor"); //default
         //TODO: MISSING PROPERTIES
 
         List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
         conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));
 
-        CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,new GUI("Consumer 1"));
+        CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,1);
         receiver.start();
         receiver.join();
     }
