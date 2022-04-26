@@ -28,7 +28,6 @@ public class PSource {
         for(int i=0;i<6;i++){
             int startIdx = (int) ((i/6.0)*data.size());
             int stopIdx = (int) (((i+1)/6.0)*data.size());
-            System.out.println(startIdx + " - " + stopIdx);
             senders[i] = new ProducerSender(data,startIdx,stopIdx,"localhost",8000);
             senders[i].start();
         }
