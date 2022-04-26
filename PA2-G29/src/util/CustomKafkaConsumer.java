@@ -52,8 +52,8 @@ public class CustomKafkaConsumer extends Thread{
                 while (conditionsIterator.hasNext()){ //check all necessary conditions
                     condition = conditionsIterator.next();
                     if (!condition.conditionOk(datapoint)){
-                        //TODO: ADD A UI UPDATE METHOD HERE(OPTIONAL)
                         conditionsIterator.remove();//don't test a failed condition twice
+                        gui.addCondition(condition.getName());
                         System.out.println("Failed condition "+condition.getName());
                     }
                 }
