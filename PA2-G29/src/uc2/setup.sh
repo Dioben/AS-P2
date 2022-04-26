@@ -5,5 +5,5 @@ echo "Instancing Zookeeper"
 nohup ./bin/kafka-server-start.sh config/server.properties &
 echo "Instancing Kafka"
 sleep 10
-./bin/kafka-topics.sh --create --topic Sensor --bootstrap-server localhost:9092
+./bin/kafka-topics.sh --create --topic Sensor --bootstrap-server localhost:9092 --partitions 6
 echo "Setup complete"
