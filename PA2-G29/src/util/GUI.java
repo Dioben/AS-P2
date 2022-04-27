@@ -2,19 +2,24 @@ package util;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class GUI extends Thread {
     private final BlockingQueue<Object[]> updates;
-    private final ArrayList<String> conditions;
+    private final Map<String, String> extraInfo;
     private int totalRecordCount = 0;
     private final DefaultTableModel recordListTableModel;
     private final DefaultTableModel recordCountByIDTableModel;
+    private DefaultTableModel conditionsTableModel;
 
     private JFrame frame;
     private JPanel mainPanel;
@@ -23,22 +28,25 @@ public class GUI extends Thread {
     private JScrollPane recordCountByIDPanel;
     private JTable recordListTable;
     private JTable recordCountByIDTable;
-    private JLabel conditionsLabel;
+    private JLabel extraInfoLabel;
+    private JPanel conditionsContainerPanel;
+    private JScrollPane conditionsPanel;
+    private JTable conditionsTable;
 
     public GUI(String title) {
         updates = new LinkedBlockingQueue<>();
-        conditions = new ArrayList<>();
+        extraInfo = new HashMap<>();
 
         frame = new JFrame(title);
         frame.setContentPane(this.mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setMinimumSize(new Dimension(516, 352));
-        frame.setPreferredSize(new Dimension(516, 352));
+        frame.setMinimumSize(new Dimension(516, 356));
+        frame.setPreferredSize(new Dimension(516, 356));
         frame.pack();
 
-        recordListPanel.setMinimumSize(new Dimension(300, 240));
-        recordListPanel.setMaximumSize(new Dimension(300, 240));
-        recordListPanel.setPreferredSize(new Dimension(300, 240));
+        recordListPanel.setMinimumSize(new Dimension(300, 244));
+        recordListPanel.setMaximumSize(new Dimension(300, 244));
+        recordListPanel.setPreferredSize(new Dimension(300, 244));
         recordListTableModel = new DefaultTableModel(new String[] {"Sensor ID", "Temp. (Cº)", "Timestamp"}, 0) {
             @Override
             public Class getColumnClass(int column) {
@@ -55,9 +63,9 @@ public class GUI extends Thread {
         };
         recordListTable.setModel(recordListTableModel);
 
-        recordCountByIDPanel.setMinimumSize(new Dimension(190, 240));
-        recordCountByIDPanel.setMaximumSize(new Dimension(190, 240));
-        recordCountByIDPanel.setPreferredSize(new Dimension(190, 240));
+        recordCountByIDPanel.setMinimumSize(new Dimension(190, 134));
+        recordCountByIDPanel.setMaximumSize(new Dimension(190, 134));
+        recordCountByIDPanel.setPreferredSize(new Dimension(190, 134));
         recordCountByIDTableModel = new DefaultTableModel(new String[] {"Sensor ID", "Count"}, 0) {
             @Override
             public Class getColumnClass(int column) {
@@ -79,10 +87,10 @@ public class GUI extends Thread {
         try {
             while (true) {
                 update = updates.take();
-                if (update.length == 3) {
-                    int sensorId = (int) update[0];
-                    double temp = (double) update[1];
-                    long timestamp = (long) update[2];
+                if (update[0].equals("RECORD")) {
+                    int sensorId = (int) update[1];
+                    double temp = (double) update[2];
+                    long timestamp = (long) update[3];
                     totalRecordCountLabel.setText("Total records received: " + (++totalRecordCount));
                     boolean newID = true;
                     for (int i = 0; i < recordCountByIDTableModel.getRowCount(); i++) {
@@ -96,19 +104,35 @@ public class GUI extends Thread {
                         recordCountByIDTableModel.addRow(new Object[] {sensorId, 1});
                     }
                     recordListTableModel.addRow(new Object[] {sensorId, temp, timestamp});
-                } else {
-                    String condition = (String) update[0];
-                    conditions.add(condition);
-                    StringBuilder label;
-                    if (condition.length() == 1)
-                        label = new StringBuilder("Failed condition: ");
-                    else
-                        label = new StringBuilder("Failed conditions: ");
-                    Iterator<String> iterator = conditions.iterator();
-                    while (iterator.hasNext()) {
-                        label.append(iterator.next()).append(", ");
+                } else if (update[0].equals("CONDITION")) {
+                    conditionsContainerPanel.setVisible(true);
+                    String condition = (String) update[1];
+                    String status = (String) update[2];
+                    boolean newCond = true;
+                    for (int i = 0; i < conditionsTableModel.getRowCount(); i++) {
+                        if (conditionsTableModel.getValueAt(i, 1).equals(condition)) {
+                            conditionsTableModel.setValueAt(status, i, 0);
+                            newCond = false;
+                            break;
+                        }
                     }
-                    conditionsLabel.setText(label.substring(0, label.length()-2));
+                    if (newCond) {
+                        conditionsTableModel.addRow(new Object[] {status, condition});
+                        conditionsTable.sizeColumnsToFit(1);
+                    }
+                } else if (update[0].equals("EXTRA")) {
+                    String name = (String) update[1];
+                    String value = (String) update[2];
+                    extraInfo.put(name, value);
+                    StringBuilder label = new StringBuilder();
+                    Iterator<String> iterator = extraInfo.keySet().iterator();
+                    while (iterator.hasNext()) {
+                        String key = iterator.next();
+                        label.append(key).append(": ").append(extraInfo.get(key)).append(", ");
+                    }
+                    extraInfoLabel.setText(label.substring(0, label.length()-2));
+                } else {
+                    System.err.println("GUI got unknown update.");
                 }
 
             }
@@ -120,6 +144,7 @@ public class GUI extends Thread {
     public void addRecord(int sensorId, double temp, long timestamp) {
         try {
             updates.put(new Object[] {
+                    "RECORD",
                     sensorId,
                     temp,
                     timestamp
@@ -129,10 +154,24 @@ public class GUI extends Thread {
         }
     }
 
-    public void addCondition(String condition) {
+    public void addCondition(String condition, String status) {
         try {
             updates.put(new Object[] {
-                    condition
+                    "CONDITION",
+                    condition,
+                    status
+            });
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addExtraInfo(String name, String value) {
+        try {
+            updates.put(new Object[] {
+                    "EXTRA",
+                    name,
+                    value,
             });
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -180,5 +219,26 @@ public class GUI extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void createUIComponents() {
+        conditionsTable = new JTable() {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                if (column == 0) {
+                    Component component = super.prepareRenderer(renderer, row, column);
+                    TableColumn tableColumn = getColumnModel().getColumn(column);
+                    tableColumn.setPreferredWidth(95);
+                    return component;
+                }
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
+        conditionsTableModel = new DefaultTableModel(new String[] {"Status", "Condition"}, 0);
+        conditionsTable.setModel(conditionsTableModel);
     }
 }
