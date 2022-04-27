@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SensorParser {
+    /**
+     * Reads a file matching the sensor - temp - timestamp format used in this project and sends a list of contents
+     * @param fileName Name of the file to read. Must be in resources folder
+     * @return FileData list respective to file
+     */
     public static List<FileData> readFile(String fileName){
         List<FileData> data = new ArrayList<>();
         InputStream file;

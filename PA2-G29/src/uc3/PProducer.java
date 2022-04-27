@@ -1,4 +1,4 @@
-package uc2;
+package uc3;
 
 
 import util.CustomKafkaProducer;
@@ -8,10 +8,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Properties;
 
+//https://docs.confluent.io/cloud/current/client-apps/optimizing/throughput.html#optimizing-for-throughput
 /**
  * An implementation of Kafka consumer ensemble<br>
- * Deploys 6 producer instances with a focus on minimizing latency and ensuring we don't lose all records relative to a given sensor ID<br>
- * Each producer writers to a different partition - this is not good for latency but it helps enforce data ordering
+ * Deploys 3 producer instances with a focus on maximizing throughput<br>
+ * Each producer writers to a different partition and supports a large ammount of concurrent requests,uses ACKs to reduce data loss
  */
 public class PProducer {
     public static void main(String[] args) {
@@ -23,11 +24,12 @@ public class PProducer {
         props.put("bootstrap.servers","localhost:9092");
         props.put("key.serializer","org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer","org.apache.kafka.common.serialization.DoubleSerializer");
-        props.put("acks","0"); //disable ACKs to lower latency
-        props.put("max.in.flight.requests.per.connection","1"); //force 1 concurrent request at most for strict order
-        props.put("linger.ms","0");//default, but useful
-        props.put("compression.type","none");//default,but useful
-        props.put("batch.size","16384");//default,already tuned for low latency
+        props.put("acks","1"); //default
+        props.put("max.in.flight.requests.per.connection","50"); //Strong concurrency but not good for ordering
+        props.put("linger.ms","100");//tends towards larger batches but higher latency
+        props.put("compression.type","lz4");//smaller data volume
+        props.put("batch.size","150000");//larger total data per packet
+        props.put("buffer.memory","33554432");//default, but with more partitions we're supposed to increase this
         //TODO: SET EXTRA PROPERTIES HERE
         try {
             serverSocket = new ServerSocket(port);

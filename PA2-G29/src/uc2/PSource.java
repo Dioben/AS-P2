@@ -1,7 +1,8 @@
 package uc2;
 
 import util.FileData;
-import util.ProducerSender;
+import util.SensorSender;
+
 import java.util.List;
 import static util.SensorParser.readFile;
 
@@ -22,18 +23,7 @@ public class PSource {
             return value;
         });
 
-
-        ProducerSender[] senders = new ProducerSender[6];
-
-        for(int i=0;i<6;i++){
-            int startIdx = (int) ((i/6.0)*data.size());
-            int stopIdx = (int) (((i+1)/6.0)*data.size());
-            senders[i] = new ProducerSender(data,startIdx,stopIdx,"localhost",8000);
-            senders[i].start();
-        }
-
-        for(int i=0;i<6;i++)
-            senders[i].join();
+        SensorSender.sendDataUniformSplit(data, 6,"localhost",8000);
 
 
     }

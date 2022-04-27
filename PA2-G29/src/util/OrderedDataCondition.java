@@ -11,7 +11,7 @@ public class OrderedDataCondition implements ConsumerDataCondition<Integer,Doubl
 
     /**
      * Instance an ordered data condition
-     * @param condition Compares previous record to current one, returns 0 if equal, less than 0 if wrong order, more than 0 if good order
+     * @param condition Compares previous record to current one, returns less than 0 if wrong order, more than or equal to 0 if good order
      * @param name This Condition's name
      */
     public OrderedDataCondition(Comparator<ConsumerRecord<Integer,Double>> condition, String name){
