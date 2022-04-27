@@ -225,16 +225,10 @@ public class GUI extends Thread {
         conditionsTable = new JTable() {
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                if (column == 0) {
-                    Component component = super.prepareRenderer(renderer, row, column);
-                    TableColumn tableColumn = getColumnModel().getColumn(column);
-                    tableColumn.setPreferredWidth(95);
-                    return component;
-                }
                 Component component = super.prepareRenderer(renderer, row, column);
                 int rendererWidth = component.getPreferredSize().width;
                 TableColumn tableColumn = getColumnModel().getColumn(column);
-                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, 95));
                 return component;
             }
         };
