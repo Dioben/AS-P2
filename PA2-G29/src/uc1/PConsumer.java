@@ -31,7 +31,8 @@ public class PConsumer {
         GUI gui = new GUI("Consumer 1");
         CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,gui);
         gui.start();
-        gui.addCondition("Order by timestamp ascending", "Successful");
+        for (ConsumerDataCondition<Integer,Double> condition : conditions)
+            gui.addCondition(condition.getName(), "Successful");
         receiver.start();
         receiver.join();
     }

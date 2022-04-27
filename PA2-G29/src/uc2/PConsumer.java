@@ -32,8 +32,8 @@ public class PConsumer {
             GUI gui = new GUI("Consumer " + (i+1));
             receivers[i] = new CustomKafkaConsumer(topic,props,conditions,gui);
             gui.start();
-            gui.addCondition("Same Sensor order by timestamp ascending", "Successful");
-            gui.addCondition("Unique Sensor ID", "Successful");
+            for (ConsumerDataCondition<Integer,Double> condition : conditions)
+                gui.addCondition(condition.getName(), "Successful");
         }
         for(int i=0;i<6;i++)
             receivers[i].start();
