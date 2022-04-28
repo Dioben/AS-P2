@@ -30,7 +30,6 @@ public class PProducer {
         props.put("compression.type","lz4");//smaller data volume
         props.put("batch.size","150000");//larger total data per packet
         props.put("buffer.memory","33554432");//default, but with more partitions we're supposed to increase this
-        //TODO: SET EXTRA PROPERTIES HERE
         try {
             serverSocket = new ServerSocket(port);
             int i = 0;

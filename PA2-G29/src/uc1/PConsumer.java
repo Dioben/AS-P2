@@ -23,7 +23,6 @@ public class PConsumer {
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");
         props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RangeAssignor, org.apache.kafka.clients.consumer.CooperativeStickyAssignor"); //default
-        //TODO: MISSING PROPERTIES
 
         List<KafkaRecordListener<Integer,Double>> conditions = new ArrayList<>();
         conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));

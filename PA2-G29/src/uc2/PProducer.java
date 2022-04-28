@@ -28,7 +28,6 @@ public class PProducer {
         props.put("linger.ms","0");//default, but useful
         props.put("compression.type","none");//default,but useful
         props.put("batch.size","16384");//default,already tuned for low latency
-        //TODO: SET EXTRA PROPERTIES HERE
         try {
             serverSocket = new ServerSocket(port);
             int i = 0;

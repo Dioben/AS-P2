@@ -23,8 +23,6 @@ public class PConsumer {
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");//only 1 group for all receivers
         props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RoundRobinAssignor"); //1 partition per consumer hopefully
-        //TODO: MISSING PROPERTIES
-
         CustomKafkaConsumer[] receivers = new CustomKafkaConsumer[6];
 
         for(int i=0;i<6;i++){

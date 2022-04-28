@@ -28,7 +28,6 @@ public class PProducer {
         props.put("linger.ms","0");//default
         props.put("compression.type","none");//default
         props.put("batch.size","16384");//default
-        //TODO: SET EXTRA PROPERTIES HERE
         try {
             serverSocket = new ServerSocket(port);
             int i = 0;

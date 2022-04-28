@@ -74,7 +74,6 @@ public class CustomKafkaProducer extends Thread{
                 record = new ProducerRecord(topicName,partition,timestamp,sensId,temp);
                 producer.send(record);
             }
-            //TODO: SHOULD THE UI SHUT DOWN HERE TOO?
             in.close();
             comms.close();
         } catch (IOException e) {
