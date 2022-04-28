@@ -12,7 +12,7 @@ Add these executables to the project (PA2_G29):
 - slf4j-log4j12-1.7.30.jar
 - lz4-java-1.8.0.jar
 
-Move the **kafka_2.13-3.1.0** folder to the home directory or export EXEC_PATH to the folder in another location (2nd option is untested).
+Move the **kafka_2.13-3.1.0** folder to the home directory, or run `$export PATH_TO_KAFKA=<current location of the kafka folder>`.
 
 ### **Running the UCs**
 
