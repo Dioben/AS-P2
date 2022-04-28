@@ -4,7 +4,7 @@ Repository for a project built around exploring Apache Kafka
 ## How to run
 
 ### **First time setup**
-Add these executables to the project root directory and add them to the project:
+Add these executables to the project (PA2_G29) root directory and add them to the project:
 - kafka-clients-3.1.0.jar
 - kafka-log4j-appender-3.1.0.jar
 - log4j-1.2.17.jar
