@@ -20,6 +20,7 @@ public class PConsumer {
         GUI gui = new GUI("Global stats display");
         RecordAggregate trueMinAggregate = new MinTempAggregate(gui,"Global Min. Temp");
         RecordAggregate trueMaxAggregate = new MaxTempAggregate(gui,"Global Max. Temp");
+        gui.onlyExtraInfo(true);
         gui.start();
 
         for (int group = 0;group<3;group++){
@@ -29,7 +30,7 @@ public class PConsumer {
             props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
             props.put("group.id",String.valueOf(group));//3 consumer groups
             props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RoundRobinAssignor"); //indifferent
-            GUI groupUI = new GUI("Consumer Group" + (group+1));
+            GUI groupUI = new GUI("Consumer Group " + (group+1));
             List<KafkaRecordListener<Integer,Double>> listeners = new ArrayList<>();
             listeners.add(trueMaxAggregate);
             listeners.add(trueMinAggregate);
@@ -37,7 +38,7 @@ public class PConsumer {
             listeners.add(new MaxTempAggregate(groupUI,"Max. Temp"));
             groupUI.start();
             for(int i=0;i<3;i++){
-                receivers[i] = new CustomKafkaConsumer(topic,props,listeners,groupUI);
+                receivers[group*3+i] = new CustomKafkaConsumer(topic,props,listeners,groupUI);
             }
         }
 

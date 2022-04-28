@@ -32,6 +32,8 @@ public class GUI extends Thread {
     private JPanel conditionsContainerPanel;
     private JScrollPane conditionsPanel;
     private JTable conditionsTable;
+    private JPanel recordListContainerPanel;
+    private JPanel recordCountByIdContainerPanel;
 
     public GUI(String title) {
         updates = new LinkedBlockingQueue<>();
@@ -178,6 +180,18 @@ public class GUI extends Thread {
         }
     }
 
+    public void onlyExtraInfo(Boolean bool) {
+        totalRecordCountLabel.setVisible(!bool);
+        recordListContainerPanel.setVisible(!bool);
+        recordCountByIdContainerPanel.setVisible(!bool);
+        if (bool) {
+            frame.setMinimumSize(new Dimension(516, 64));
+            frame.setSize(new Dimension(516, 64));
+        }
+        else
+            frame.setMinimumSize(new Dimension(516, 356));
+    }
+
     public void enableSorting() {
         TableRowSorter<DefaultTableModel> recordListTableSorter = new TableRowSorter<>(recordListTableModel);
         recordListTable.setRowSorter(recordListTableSorter);
@@ -190,6 +204,21 @@ public class GUI extends Thread {
         ArrayList<RowSorter.SortKey> recordCountByIDSortKeys = new ArrayList<>();
         recordCountByIDSortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         recordCountByIDTableSorter.setSortKeys(recordCountByIDSortKeys);
+    }
+
+    private void createUIComponents() {
+        conditionsTable = new JTable() {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, 95));
+                return component;
+            }
+        };
+        conditionsTableModel = new DefaultTableModel(new String[] {"Status", "Condition"}, 0);
+        conditionsTable.setModel(conditionsTableModel);
     }
 
     /**
@@ -219,20 +248,5 @@ public class GUI extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void createUIComponents() {
-        conditionsTable = new JTable() {
-            @Override
-            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component component = super.prepareRenderer(renderer, row, column);
-                int rendererWidth = component.getPreferredSize().width;
-                TableColumn tableColumn = getColumnModel().getColumn(column);
-                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, 95));
-                return component;
-            }
-        };
-        conditionsTableModel = new DefaultTableModel(new String[] {"Status", "Condition"}, 0);
-        conditionsTable.setModel(conditionsTableModel);
     }
 }

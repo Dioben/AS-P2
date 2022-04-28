@@ -22,7 +22,7 @@ public class PConsumer {
         props.put("group.id","0");//only 1 group for all receivers
         props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RoundRobinAssignor"); //1 partition per consumer hopefully
         CustomKafkaConsumer[] receivers = new CustomKafkaConsumer[3];
-        GUI gui = new GUI("Consumer Group");
+        GUI gui = new GUI("Consumer Group 1");
         gui.start();
         List<KafkaRecordListener<Integer,Double>> listeners = new ArrayList<>();
         listeners.add(new AvgTempAggregate(gui,"Group Avg. Temp"));
