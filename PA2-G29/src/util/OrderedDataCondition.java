@@ -3,11 +3,13 @@ package util;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import java.util.Comparator;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class OrderedDataCondition implements ConsumerDataCondition<Integer,Double>{
+public class OrderedDataCondition implements RecordCondition<Integer,Double> {
     ConsumerRecord<Integer,Double> previous = null;
     Comparator<ConsumerRecord<Integer,Double>> condition;
-    private String name;
+    private final String name;
+    private final ReentrantLock lock;
 
     /**
      * Instance an ordered data condition
@@ -17,17 +19,20 @@ public class OrderedDataCondition implements ConsumerDataCondition<Integer,Doubl
     public OrderedDataCondition(Comparator<ConsumerRecord<Integer,Double>> condition, String name){
         this.condition = condition;
         this.name = name;
+        lock = new ReentrantLock();
     }
 
     @Override
-    public boolean conditionOk(ConsumerRecord<Integer,Double> record) {
+    public boolean register(ConsumerRecord<Integer,Double> record) {
+        lock.lock();
         ConsumerRecord<Integer,Double> hold = previous;
         previous = record;
-        if (hold==null)
+        if (hold==null){
+            lock.unlock();
             return true;
-        if ( condition.compare(hold,previous)<0)
-            return false;
-        return true;
+        }
+        lock.unlock();
+        return condition.compare(hold, previous) >= 0;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package uc3;
 
-import util.ConsumerDataCondition;
+import util.KafkaRecordListener;
 import util.CustomKafkaConsumer;
 import util.GUI;
-import util.OrderedDataCondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class PConsumer {
 
         for(int i=0;i<threads;i++){
             //don't share conditions object
-            List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
+            List<KafkaRecordListener<Integer,Double>> conditions = new ArrayList<>();
            //TODO: ADD A DUPLICATE CHECK CONDITION IF WE FEEL LIKE IT
             GUI gui = new GUI("Consumer " + (i+1));
             receivers[i] = new CustomKafkaConsumer(topic,props,conditions,gui);

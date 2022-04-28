@@ -1,6 +1,6 @@
 package uc4;
 
-import util.ConsumerDataCondition;
+import util.KafkaRecordListener;
 import util.CustomKafkaConsumer;
 import util.GUI;
 import util.OrderedDataCondition;
@@ -29,12 +29,12 @@ public class PConsumer {
 
         for(int i=0;i<6;i++){
             //don't share conditions object
-            List<ConsumerDataCondition<Integer,Double>> conditions = new ArrayList<>();
+            List<KafkaRecordListener<Integer,Double>> conditions = new ArrayList<>();
             conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp() - previous.timestamp()),"Order by timestamp ascending"));
             GUI gui = new GUI("Consumer " + (i+1));
             receivers[i] = new CustomKafkaConsumer(topic,props,conditions,gui);
             gui.start();
-            for (ConsumerDataCondition<Integer,Double> condition : conditions)
+            for (KafkaRecordListener<Integer,Double> condition : conditions)
                 gui.addCondition(condition.getName(), "Successful");
         }
         for(int i=0;i<6;i++)
