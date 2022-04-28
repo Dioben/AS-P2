@@ -38,9 +38,6 @@ public class PConsumer {
             groupUI.start();
             for(int i=0;i<3;i++){
                 receivers[i] = new CustomKafkaConsumer(topic,props,listeners,groupUI);
-                for (KafkaRecordListener<Integer,Double> condition : listeners)
-                    if (RecordCondition.class.isInstance(condition)) //is this an actual condition or an aggregator
-                        gui.addCondition(condition.getName(), "Successful");
             }
         }
 

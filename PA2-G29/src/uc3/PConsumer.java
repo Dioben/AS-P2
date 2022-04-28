@@ -21,14 +21,13 @@ public class PConsumer {
         props.put("key.deserializer","org.apache.kafka.common.serialization.IntegerDeserializer");
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");//only 1 group for all receivers
-        props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RoundRobinAssignor"); //1 partition per consumer hopefully
+        props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RoundRobinAssignor"); //2 partitions per consumer hopefully
         int threads = 3;
         CustomKafkaConsumer[] receivers = new CustomKafkaConsumer[threads];
 
         for(int i=0;i<threads;i++){
             //don't share conditions object
             List<KafkaRecordListener<Integer,Double>> conditions = new ArrayList<>();
-           //TODO: ADD A DUPLICATE CHECK CONDITION IF WE FEEL LIKE IT
             GUI gui = new GUI("Consumer " + (i+1));
             receivers[i] = new CustomKafkaConsumer(topic,props,conditions,gui);
             gui.start();
