@@ -25,3 +25,5 @@ PA2_G29/out/*
 PA2_G29/.idea/*
 *nohup.out
 PA2_G29/PA2_G29.iml
+/PA2_G29/nbproject/private/
+PA2_G29/build/*
