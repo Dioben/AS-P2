@@ -20,7 +20,7 @@ public class PProducer {
         int port = 8000;
         String topic = "Sensor";
         Properties props = new Properties();
-        props.put("bootstrap.servers","localhost:9092");
+        props.put("bootstrap.servers","localhost:9092,localhost:9093,localhost:9094");
         props.put("key.serializer","org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer","org.apache.kafka.common.serialization.DoubleSerializer");
         props.put("acks","0"); //disable ACKs to lower latency

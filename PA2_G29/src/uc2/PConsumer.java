@@ -15,7 +15,7 @@ public class PConsumer {
         GUI.setGUILook(new String[] { "GTK+", "Nimbus" });
         String topic = "Sensor";
         Properties props = new Properties();
-        props.put("bootstrap.servers","localhost:9092");
+        props.put("bootstrap.servers","localhost:9092,localhost:9093,localhost:9094");
         props.put("key.deserializer","org.apache.kafka.common.serialization.IntegerDeserializer");
         props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
         props.put("group.id","0");//only 1 group for all receivers
@@ -26,13 +26,11 @@ public class PConsumer {
         for(int i=0;i<6;i++){
             //don't share conditions object
             List<KafkaRecordListener<Integer,Double>> conditions = new ArrayList<>();
-            conditions.add(new OrderedDataCondition((previous,current)-> !(current.key().equals(previous.key()))?1:(int) (current.timestamp() - previous.timestamp()),"Same Sensor order by timestamp ascending"));
-            conditions.add(new OrderedDataCondition((previous,current)-> (current.key().equals(previous.key())?0:-1 ),"Unique Sensor ID"));
             GUI gui = new GUI("Consumer " + (i+1));
+            conditions.add(new OrderedDataCondition((previous,current)-> (current.key().equals(previous.key())?0:-1 ),"Unique Sensor ID",gui));
+            conditions.add(new OrderedDataCondition((previous,current)-> !(current.key().equals(previous.key()))?1:(int) (current.timestamp() - previous.timestamp()),"Same Sensor order by timestamp ascending",gui));
             receivers[i] = new CustomKafkaConsumer(topic,props,conditions,gui);
             gui.start();
-            for (KafkaRecordListener<Integer,Double> condition : conditions)
-                gui.addCondition(condition.getName(), "Successful");
         }
         for(int i=0;i<6;i++)
             receivers[i].start();

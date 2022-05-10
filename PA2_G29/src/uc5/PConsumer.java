@@ -25,7 +25,7 @@ public class PConsumer {
 
         for (int group = 0;group<3;group++){
             Properties props = new Properties();
-            props.put("bootstrap.servers","localhost:9092");
+            props.put("bootstrap.servers","localhost:9092,localhost:9093,localhost:9094");
             props.put("key.deserializer","org.apache.kafka.common.serialization.IntegerDeserializer");
             props.put("value.deserializer","org.apache.kafka.common.serialization.DoubleDeserializer");
             props.put("group.id",String.valueOf(group));//3 consumer groups

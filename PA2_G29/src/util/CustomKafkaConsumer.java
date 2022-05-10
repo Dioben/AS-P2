@@ -48,9 +48,6 @@ public class CustomKafkaConsumer extends Thread{
                     listener = listenerListIterator.next();
                     if (!listener.register(datapoint)){
                         listenerListIterator.remove();//don't test a failed condition twice
-                        if (RecordCondition.class.isInstance(listener))
-                            gui.addCondition(listener.getName(), "Failed");
-                        System.out.println("Failed condition "+listener.getName());
                     }
                 }
 
