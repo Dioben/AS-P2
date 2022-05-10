@@ -6,8 +6,9 @@ import java.util.Comparator;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class OrderedDataCondition implements RecordCondition<Integer,Double> {
-    ConsumerRecord<Integer,Double> previous = null;
-    Comparator<ConsumerRecord<Integer,Double>> condition;
+    private ConsumerRecord<Integer,Double> previous = null;
+    private final Comparator<ConsumerRecord<Integer,Double>> condition;
+    private final GUI gui;
     private final String name;
     private final ReentrantLock lock;
 
@@ -16,9 +17,11 @@ public class OrderedDataCondition implements RecordCondition<Integer,Double> {
      * @param condition Compares previous record to current one, returns less than 0 if wrong order, more than or equal to 0 if good order
      * @param name This Condition's name
      */
-    public OrderedDataCondition(Comparator<ConsumerRecord<Integer,Double>> condition, String name){
+    public OrderedDataCondition(Comparator<ConsumerRecord<Integer,Double>> condition, String name,GUI gui){
         this.condition = condition;
         this.name = name;
+        this.gui = gui;
+        gui.addCondition(name, "Successful");
         lock = new ReentrantLock();
     }
 
@@ -32,7 +35,10 @@ public class OrderedDataCondition implements RecordCondition<Integer,Double> {
             return true;
         }
         lock.unlock();
-        return condition.compare(hold, previous) >= 0;
+        boolean val = condition.compare(hold, previous) >= 0;
+        if (!val)
+            gui.addCondition(name, "Failed");
+        return val;
     }
 
     @Override

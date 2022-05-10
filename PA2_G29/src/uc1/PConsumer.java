@@ -25,13 +25,10 @@ public class PConsumer {
         props.put("partition.assignment.strategy","org.apache.kafka.clients.consumer.RangeAssignor, org.apache.kafka.clients.consumer.CooperativeStickyAssignor"); //default
 
         List<KafkaRecordListener<Integer,Double>> conditions = new ArrayList<>();
-        conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending"));
-
         GUI gui = new GUI("Consumer 1");
+        conditions.add(new OrderedDataCondition((previous,current)-> (int) (current.timestamp()-previous.timestamp()),"Order by timestamp ascending",gui));
         CustomKafkaConsumer receiver = new CustomKafkaConsumer(topic,props,conditions,gui);
         gui.start();
-        for (KafkaRecordListener<Integer,Double> condition : conditions)
-            gui.addCondition(condition.getName(), "Successful");
         receiver.start();
         receiver.join();
     }
