@@ -22,7 +22,7 @@ public class PProducer {
         props.put("bootstrap.servers","localhost:9092");
         props.put("key.serializer","org.apache.kafka.common.serialization.IntegerSerializer");
         props.put("value.serializer","org.apache.kafka.common.serialization.DoubleSerializer");
-        props.put("acks","1");//default
+        props.put("acks","0");//records can be lost
         props.put("max.in.flight.requests.per.connection","5");//default
         props.put("linger.ms","0");//default
         props.put("compression.type","none");//default

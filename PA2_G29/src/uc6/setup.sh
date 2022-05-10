@@ -6,5 +6,5 @@ sleep 0.1
 nohup ./bin/kafka-server-start.sh config/server.properties &
 echo "Instancing Kafka"
 sleep 10
-./bin/kafka-topics.sh --create --topic Sensor --bootstrap-server localhost:9092 --partitions 6
+./bin/kafka-topics.sh --create --topic Sensor --bootstrap-server localhost:9092 --partitions 6 --replication-factor 1
 echo "Setup complete"
