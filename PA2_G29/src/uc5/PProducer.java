@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * An implementation of Kafka consumer ensemble<br>
  * Deploys 6 producer instances with default settings<br>
- * Each producer writers to a different partition
+ * Each producer writes to a different partition
  */
 public class PProducer {
     public static void main(String[] args) {

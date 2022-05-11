@@ -4,7 +4,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * Average temperature implementation of RecordAggregate
+ */
 public class AvgTempAggregate implements RecordAggregate<Integer,Double>{
     private final String name;
     private double total = 0;

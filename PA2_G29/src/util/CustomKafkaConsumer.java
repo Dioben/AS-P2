@@ -25,6 +25,8 @@ public class CustomKafkaConsumer extends Thread{
      * Instances a new producer thread
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
+     * @param conds list of conditions to check on the records
+     * @param gui GUI instance of this consumer
      */
     public CustomKafkaConsumer(String topic, Properties properties, List<KafkaRecordListener<Integer,Double>> conds, GUI gui){
         this.topicName = topic;

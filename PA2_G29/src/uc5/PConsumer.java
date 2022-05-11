@@ -8,7 +8,8 @@ import java.util.Properties;
 
 /**
  * An implementation of Kafka consumer ensemble<br>
- * Deploys 9 consumer threads in 3 groups
+ * Deploys 9 consumer threads in 3 groups<br>
+ * Deploys one UI per group
  */
 public class PConsumer {
     public static void main(String[] args) throws InterruptedException {

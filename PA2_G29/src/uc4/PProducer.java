@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * An implementation of Kafka consumer ensemble<br>
  * Deploys 6 producer instances with a focus on ordering and avoiding data loss<br>
- * Each producer writers to a different partition, ordering is intra partition rather than global
+ * Each producer writes to a different partition, ordering is intra partition rather than global
  */
 public class PProducer {
     public static void main(String[] args) {

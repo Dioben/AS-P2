@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * An implementation of Kafka consumer ensemble<br>
  * Deploys 3 producer instances with a focus on maximizing throughput<br>
- * Each producer writers to a different partition and supports a large ammount of concurrent requests,uses ACKs to reduce data loss
+ * Each producer writes to a different partition and supports a large amount of concurrent requests, uses ACKs to reduce data loss
  */
 public class PProducer {
     public static void main(String[] args) {

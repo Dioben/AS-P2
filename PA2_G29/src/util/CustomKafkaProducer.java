@@ -30,6 +30,7 @@ public class CustomKafkaProducer extends Thread{
      * @param comms the socket that sensor information is coming in from
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
+     * @param gui GUI of the producer
      */
     public CustomKafkaProducer(Socket comms, String topic, Properties properties, GUI gui){
         this.comms = comms;
@@ -44,6 +45,7 @@ public class CustomKafkaProducer extends Thread{
      * @param comms the socket that sensor information is coming in from
      * @param topic the topic to publish information into
      * @param properties kafka producer settings
+     * @param gui GUI instance of this producer
      * @param partition partition to post data into
      */
     public CustomKafkaProducer(Socket comms, String topic, Properties properties, GUI gui, int partition){

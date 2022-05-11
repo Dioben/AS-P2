@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Implementation of Producer Server client<br>
- * Contacts a given server and dumps all information in (SENSOR TEMP ID) format followed by an "END" message<br>
+ * Contacts a given server and dumps all information in (SENSOR TEMP ID) format followed by an "END" message
  */
 public class ProducerSender extends Thread{
     private  Socket comms;

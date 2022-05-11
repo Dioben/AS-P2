@@ -23,7 +23,7 @@ public class GUI extends Thread {
     private final DefaultTableModel recordCountByIDTableModel;
     private DefaultTableModel conditionsTableModel;
 
-    private JFrame frame;
+    private final JFrame frame;
     private JPanel mainPanel;
     private JLabel totalRecordCountLabel;
     private JScrollPane recordListPanel;
@@ -36,6 +36,11 @@ public class GUI extends Thread {
     private JPanel recordListContainerPanel;
     private JPanel recordCountByIdContainerPanel;
 
+    /**
+     * Constructor of GUI<br>
+     * Initializes the frame and variables
+     * @param title title of the UI window
+     */
     public GUI(String title) {
         updates = new LinkedBlockingQueue<>();
         extraInfo = new HashMap<>();
@@ -85,6 +90,9 @@ public class GUI extends Thread {
         recordCountByIDTable.setModel(recordCountByIDTableModel);
     }
 
+    /**
+     * Makes the GUI start listening for update requests and updates the UI
+     */
     public void run() {
         frame.setVisible(true);
         Object[] update;
@@ -145,6 +153,12 @@ public class GUI extends Thread {
         }
     }
 
+    /**
+     * Adds a record to the UI
+     * @param sensorId ID of the sensor
+     * @param temp temperature the sensor detected
+     * @param timestamp when the temperature was detected
+     */
     public void addRecord(int sensorId, double temp, long timestamp) {
         try {
             updates.put(new Object[]{
@@ -158,6 +172,12 @@ public class GUI extends Thread {
         }
     }
 
+    /**
+     * Adds a condition to the UI<br>
+     * If condition has already been added, the status is updated instead
+     * @param condition name of the condition
+     * @param status status of the condition
+     */
     public void addCondition(String condition, String status) {
         try {
             updates.put(new Object[]{
@@ -170,6 +190,12 @@ public class GUI extends Thread {
         }
     }
 
+    /**
+     * Adds extra info to a string in the UI<br>
+     * If info has already been added, it is updated instead
+     * @param name name of the extra info
+     * @param value info
+     */
     public void addExtraInfo(String name, String value) {
         try {
             updates.put(new Object[]{
@@ -182,6 +208,10 @@ public class GUI extends Thread {
         }
     }
 
+    /**
+     * Hides/Shows record tables and total count
+     * @param bool true if hides, false if shows
+     */
     public void onlyExtraInfo(Boolean bool) {
         totalRecordCountLabel.setVisible(!bool);
         recordListContainerPanel.setVisible(!bool);
@@ -193,20 +223,9 @@ public class GUI extends Thread {
             frame.setMinimumSize(new Dimension(516, 356));
     }
 
-    public void enableSorting() {
-        TableRowSorter<DefaultTableModel> recordListTableSorter = new TableRowSorter<>(recordListTableModel);
-        recordListTable.setRowSorter(recordListTableSorter);
-        ArrayList<RowSorter.SortKey> recordListSortKeys = new ArrayList<>();
-        recordListSortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
-        recordListTableSorter.setSortKeys(recordListSortKeys);
-
-        TableRowSorter<DefaultTableModel> recordCountByIDTableSorter = new TableRowSorter<>(recordCountByIDTableModel);
-        recordCountByIDTable.setRowSorter(recordCountByIDTableSorter);
-        ArrayList<RowSorter.SortKey> recordCountByIDSortKeys = new ArrayList<>();
-        recordCountByIDSortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-        recordCountByIDTableSorter.setSortKeys(recordCountByIDSortKeys);
-    }
-
+    /**
+     * Creates the condition table to be able to customize it better
+     */
     private void createUIComponents() {
         conditionsTable = new JTable() {
             @Override
@@ -223,11 +242,9 @@ public class GUI extends Thread {
     }
 
     /**
-     * Changes the theme of the UI window
-     * <p>
+     * Changes the theme of the UI window<br>
      * If computer doesn't have any of the themes provided the computer's default
      * one will be used
-     *
      * @param wantedLooks list of theme names
      */
     public static void setGUILook(String[] wantedLooks) {

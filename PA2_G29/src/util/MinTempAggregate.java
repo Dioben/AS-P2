@@ -4,7 +4,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * Minimum temperature implementation of RecordAggregate
+ */
 public class MinTempAggregate implements RecordAggregate<Integer,Double>{
     private final String name;
     private double best = Double.MAX_VALUE;

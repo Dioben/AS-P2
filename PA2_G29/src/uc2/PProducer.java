@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * An implementation of Kafka consumer ensemble<br>
  * Deploys 6 producer instances with a focus on minimizing latency and ensuring we don't lose all records relative to a given sensor ID<br>
- * Each producer writers to a different partition - this is not good for latency but it helps enforce data ordering
+ * Each producer writes to a different partition - this is not good for latency but helps enforce data ordering
  */
 public class PProducer {
     public static void main(String[] args) {
